@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebRadio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css">
+    <link rel="icon" href="favicon.png" type="image/x-icon">
+    <style>
+        @font-face {
+            font-family: "03SmartFontUI";
+            src: url("03SmartFontUI.ttf");
+        }
+
+        body {
+            font-family: '03SmartFontUI', sans-serif;
+            background-color: #121212;
+            color: #e0e0e0;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #1f1f1f;
+            color: #e0e0e0;
+            padding: 20px 0;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        header h1 {
+            margin: 0;
+            font-size: 2.5em;
+            font-weight: 300;
+        }
+        #search-bar {
+            margin: 20px auto;
+            width: 80%;
+            text-align: center;
+        }
+        #search-bar input {
+            width: 100%;
+            padding: 15px;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 25px;
+            background-color: #333;
+            color: #e0e0e0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            outline: none;
+        }
+        #audio-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #1e1e1e;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            margin: 20px auto;
+            width: 80%;
+        }
+        #current-station {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        #current-station .flag-icon {
+            width: 64px;
+            height: 48px;
+            border-radius: 8px;
+            margin-right: 10px;
+        }
+        #current-station span {
+            font-size: 1.2em;
+        }
+        audio {
+            width: 100%;
+            margin-top: 10px;
+            border-radius: 10px;
+            background-color: #333;
+            color: #e0e0e0;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            outline: none;
+            border: none;
+        }
+        .volume-control {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+            width: 100%;
+        }
+        .volume-control label {
+            margin-right: 10px;
+        }
+        .volume-control input[type="range"] {
+            flex: 1;
+        }
+        .loading {
+            display: none;
+            border: 8px solid #e0e0e0;
+            border-top: 8px solid #6200ea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .country-section {
+            margin: 20px auto;
+            width: 80%;
+            background-color: #1e1e1e;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .country-section h2 {
+            display: flex;
+            align-items: center;
+            font-size: 1.5em;
+            border-bottom: 2px solid #6200ea;
+            padding-bottom: 10px;
+        }
+        .flag-icon {
+            border-radius: 4px;
+            margin-right: 10px;
+        }
+        .radio-station {
+            margin: 15px 0;
+        }
+        .radio-station button {
+            padding: 10px 20px;
+            font-size: 1em;
+            border: none;
+            border-radius: 25px;
+            background-color: #6200ea;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .radio-station button:hover {
+            background-color: #3700b3;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>WebRadio</h1>
+        <h2>Made by SK0528JP (from Flegertec)</h2>
+        <p>再生されていても完全に読み込まれていない場合、音声が途切れ途切れになり、ロード中マークが表示されたままになりますが、しばらくすると正しく再生される可能性があります。</p>
+    </header>
+    <div id="audio-container">
+        <div id="current-station">
+            <span class="flag-icon" id="current-flag"></span>
+            <span id="current-title">ラジオ局を選択してください</span>
+        </div>
+        <div class="loading" id="loading-spinner"></div>
+        <audio id="audio-player" controls></audio>
+        <div class="volume-control">
+            <label for="volume-slider">音量: <span id="volume-level">100</span>%</label>
+            <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="1">
+        </div>
+    </div>
+    <div id="search-bar">
+        <input type="text" id="search-input" placeholder="ラジオ局を検索">
+    </div>
+    <div id="country-list">
+
+        <div class="country-section" data-country="sweden">
+            <h2><span class="flag-icon flag-icon-se"></span>スウェーデン</h2>
+            <div class="radio-station">
+                <button onclick="playRadio('https://edge-bauersefm-06-gos2.sharp-stream.com/nrj_instreamtest_se_mp3', 'NRJ Sweden', 'flag-icon-se')">NRJ Sweden</button>
+                <button onclick="playRadio('https://stream.dbmedia.se/gk96', '102.6 Guldkanalen', 'flag-icon-se')">102.6 Guldkanalen</button>
+                <button onclick="playRadio('https://http-live.sr.se/p2musik-mp3-192', 'P2 Klassiskt', 'flag-icon-se')">P2 Klassiskt</button>
+            </div>
+        </div>
+        <!-- 他の国のラジオ局も同様に追加 -->
+    </div>
+    <script>
+        document.getElementById('search-input').addEventListener('input', function() {
+            var filter = this.value.toLowerCase();
+            var sections = document.querySelectorAll('.country-section');
+            sections.forEach(function(section) {
+                var country = section.dataset.country.toLowerCase();
+                var stations = section.querySelectorAll('.radio-station button');
+                var match = country.includes(filter);
+                stations.forEach(function(station) {
+                    if (station.textContent.toLowerCase().includes(filter) || station.textContent.toLowerCase().includes(katakanaToHiragana(filter))) {
+                        match = true;
+                    }
+                });
+                section.style.display = match ? '' : 'none';
+            });
+        });
+
+        function katakanaToHiragana(str) {
+            return str.replace(/[\u30a1-\u30f6]/g, function(match) {
+                var chr = match.charCodeAt(0) - 0x60;
+                return String.fromCharCode(chr);
+            });
+        }
+
+        function playRadio(url, title, flagClass) {
+            var audioPlayer = document.getElementById('audio-player');
+            var loadingSpinner = document.getElementById('loading-spinner');
+            var currentTitle = document.getElementById('current-title');
+            var currentFlag = document.getElementById('current-flag');
+
+            currentTitle.textContent = title;
+            currentFlag.className = 'flag-icon ' + flagClass;
+
+            loadingSpinner.style.display = 'block';
+            audioPlayer.style.display = 'none';
+
+            audioPlayer.src = url;
+            audioPlayer.load();
+            audioPlayer.play();
+
+            audioPlayer.oncanplaythrough = function() {
+                loadingSpinner.style.display = 'none';
+                audioPlayer.style.display = 'block';
+            };
+        }
+
+
+
+        document.getElementById('volume-slider').addEventListener('input', function() {
+            var audioPlayer = document.getElementById('audio-player');
+            var volumeLevel = document.getElementById('volume-level');
+            audioPlayer.volume = this.value;
+            volumeLevel.textContent = Math.round(this.value * 100);
+        });
+    </script>
+</body>
+</html>
