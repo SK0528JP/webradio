@@ -6,12 +6,25 @@
     <title>WebRadio</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css">
     <link rel="icon" href="favicon.png" type="image/x-icon">
+
+    <!-- Open Graph tags for social media -->
+    <meta property="og:title" content="WebRadio">
+    <meta property="og:description" content="世界中のラジオ局を聴くことができるWebRadioです。">
+    <meta property="og:image" content="head.png">
+    <meta property="og:url" content="https://sk0528jp.github.io/webradio/">
+    <meta property="og:type" content="website">
+
+    <!-- Twitter Card tags for Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="WebRadio">
+    <meta name="twitter:description" content="世界中のラジオ局を聴くことができるWebRadioです。">
+    <meta name="twitter:image" content="head.png">
+    
     <style>
         @font-face {
             font-family: "03SmartFontUI";
             src: url("03SmartFontUI.ttf");
         }
-
         body {
             font-family: '03SmartFontUI', sans-serif;
             background-color: #121212;
@@ -242,8 +255,6 @@
                 audioPlayer.style.display = 'block';
             };
         }
-
-
 
         document.getElementById('volume-slider').addEventListener('input', function() {
             var audioPlayer = document.getElementById('audio-player');
