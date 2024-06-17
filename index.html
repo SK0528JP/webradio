@@ -220,57 +220,83 @@
         <!-- 他の国のラジオ局も同様に追加 -->
     </div>
     <script>
-        document.getElementById('search-input').addEventListener('input', function() {
-            var filter = this.value.toLowerCase();
-            var sections = document.querySelectorAll('.country-section');
-            sections.forEach(function(section) {
-                var country = section.dataset.country.toLowerCase();
-                var stations = section.querySelectorAll('.radio-station button');
-                var match = country.includes(filter);
-                stations.forEach(function(station) {
-                    if (station.textContent.toLowerCase().includes(filter) || station.textContent.toLowerCase().includes(katakanaToHiragana(filter))) {
-                        match = true;
-                    }
-                });
-                section.style.display = match ? '' : 'none';
+    document.getElementById('search-input').addEventListener('input', function() {
+        var filter = this.value.toLowerCase();
+        var sections = document.querySelectorAll('.country-section');
+        sections.forEach(function(section) {
+            var country = section.dataset.country.toLowerCase();
+            var stations = section.querySelectorAll('.radio-station button');
+            var match = country.includes(filter);
+            stations.forEach(function(station) {
+                if (station.textContent.toLowerCase().includes(filter) || station.textContent.toLowerCase().includes(katakanaToHiragana(filter))) {
+                    match = true;
+                }
             });
+            section.style.display = match ? '' : 'none';
         });
+    });
 
-        function katakanaToHiragana(str) {
-            return str.replace(/[\u30a1-\u30f6]/g, function(match) {
-                var chr = match.charCodeAt(0) - 0x60;
-                return String.fromCharCode(chr);
+    function katakanaToHiragana(str) {
+        return str.replace(/[\u30a1-\u30f6]/g, function(match) {
+            var chr = match.charCodeAt(0) - 0x60;
+            return String.fromCharCode(chr);
+        });
+    }
+
+    function playRadio(url, title, flagClass) {
+        var audioPlayer = document.getElementById('audio-player');
+        var loadingSpinner = document.getElementById('loading-spinner');
+        var currentTitle = document.getElementById('current-title');
+        var currentFlag = document.getElementById('current-flag');
+
+        currentTitle.textContent = title;
+        currentFlag.className = 'flag-icon ' + flagClass;
+
+        loadingSpinner.style.display = 'block';
+        audioPlayer.style.display = 'none';
+
+        audioPlayer.src = url;
+        audioPlayer.load();
+        audioPlayer.play();
+
+        audioPlayer.oncanplaythrough = function() {
+            loadingSpinner.style.display = 'none';
+            audioPlayer.style.display = 'block';
+        };
+
+        // Media Session APIの設定
+        if ('mediaSession' in navigator) {
+            navigator.mediaSession.metadata = new MediaMetadata({
+                title: title,
+                artist: 'WebRadio',
+                album: 'ラジオ局',
+                artwork: [
+                    { src: 'image/icon96.png', sizes: '96x96', type: 'image/png' },
+                    { src: 'image/icon128.png', sizes: '128x128', type: 'image/png' },
+                    { src: 'image/icon192.png', sizes: '192x192', type: 'image/png' },
+                    { src: 'image/icon256.png', sizes: '256x256', type: 'image/png' },
+                    { src: 'image/icon384.png', sizes: '384x384', type: 'image/png' },
+                    { src: 'image/icon512.png', sizes: '512x512', type: 'image/png' }
+                ]
+            });
+
+            // 再生/一時停止コントロールのハンドリング
+            navigator.mediaSession.setActionHandler('play', () => {
+                audioPlayer.play();
+            });
+            navigator.mediaSession.setActionHandler('pause', () => {
+                audioPlayer.pause();
             });
         }
+    }
 
-        function playRadio(url, title, flagClass) {
-            var audioPlayer = document.getElementById('audio-player');
-            var loadingSpinner = document.getElementById('loading-spinner');
-            var currentTitle = document.getElementById('current-title');
-            var currentFlag = document.getElementById('current-flag');
+    document.getElementById('volume-slider').addEventListener('input', function() {
+        var audioPlayer = document.getElementById('audio-player');
+        var volumeLevel = document.getElementById('volume-level');
+        audioPlayer.volume = this.value;
+        volumeLevel.textContent = Math.round(this.value * 100);
+    });
+</script>
 
-            currentTitle.textContent = title;
-            currentFlag.className = 'flag-icon ' + flagClass;
-
-            loadingSpinner.style.display = 'block';
-            audioPlayer.style.display = 'none';
-
-            audioPlayer.src = url;
-            audioPlayer.load();
-            audioPlayer.play();
-
-            audioPlayer.oncanplaythrough = function() {
-                loadingSpinner.style.display = 'none';
-                audioPlayer.style.display = 'block';
-            };
-        }
-
-        document.getElementById('volume-slider').addEventListener('input', function() {
-            var audioPlayer = document.getElementById('audio-player');
-            var volumeLevel = document.getElementById('volume-level');
-            audioPlayer.volume = this.value;
-            volumeLevel.textContent = Math.round(this.value * 100);
-        });
-    </script>
 </body>
 </html>
