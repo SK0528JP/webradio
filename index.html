@@ -268,8 +268,8 @@
         if ('mediaSession' in navigator) {
             navigator.mediaSession.metadata = new MediaMetadata({
                 title: title,
-                artist: 'WebRadio',
-                album: countryName, // アルバム欄に国名を設定
+                artist: countryName,
+                album: 'WebRadio',
                 artwork: [
                     { src: 'image/icon96.png', sizes: '96x96', type: 'image/png' },
                     { src: 'image/icon128.png', sizes: '128x128', type: 'image/png' },
