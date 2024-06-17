@@ -185,36 +185,36 @@
         <div class="country-section" data-country="sweden">
             <h2><span class="flag-icon flag-icon-se"></span>スウェーデン</h2>
             <div class="radio-station">
-                <button onclick="playRadio('https://edge-bauersefm-06-gos2.sharp-stream.com/nrj_instreamtest_se_mp3', 'NRJ Sweden', 'flag-icon-se')">NRJ Sweden</button>
-                <button onclick="playRadio('https://stream.dbmedia.se/gk96', '102.6 Guldkanalen', 'flag-icon-se')">102.6 Guldkanalen</button>
-                <button onclick="playRadio('https://http-live.sr.se/p2musik-mp3-192', 'P2 Klassiskt', 'flag-icon-se')">P2 Klassiskt</button>
+                <button onclick="playRadio('https://edge-bauersefm-06-gos2.sharp-stream.com/nrj_instreamtest_se_mp3', 'NRJ Sweden', 'flag-icon-se', 'スウェーデン')">NRJ Sweden</button>
+                <button onclick="playRadio('https://stream.dbmedia.se/gk96', '102.6 Guldkanalen', 'flag-icon-se', 'スウェーデン')">102.6 Guldkanalen</button>
+                <button onclick="playRadio('https://http-live.sr.se/p2musik-mp3-192', 'P2 Klassiskt', 'flag-icon-se', 'スウェーデン')">P2 Klassiskt</button>
             </div>
         </div>
 
         <div class="country-section" data-country="finland">
             <h2><span class="flag-icon flag-icon-fi"></span>フィンランド</h2>
             <div class="radio-station">
-                <button onclick="playRadio('https://stream.radioplay.fi/kiss/kiss_64.aac', 'City 99.4 FM', 'flag-icon-fi')">City 99.4 FM</button>
-                <button onclick="playRadio('https://st.downtime.fi/sun.aac', 'Radio Sun 106.7', 'flag-icon-fi')">Radio Sun 106.7</button>
-                <button onclick="playRadio('https://stream.radioplay.fi/nrj/nrj_64.aac?direct=true&listenerid=undefined&aw_0_1st.bauer_listenerid=undefined&aw_0_1st.playerid=BMUK_inpage_html5&aw_0_1st.skey=1690467405&aw_0_1st', 'NRJ Finland', 'flag-icon-fi')">NRJ Finland</button>
+                <button onclick="playRadio('https://stream.radioplay.fi/kiss/kiss_64.aac', 'City 99.4 FM', 'flag-icon-fi', 'フィンランド')">City 99.4 FM</button>
+                <button onclick="playRadio('https://st.downtime.fi/sun.aac', 'Radio Sun 106.7', 'flag-icon-fi', 'フィンランド')">Radio Sun 106.7</button>
+                <button onclick="playRadio('https://stream.radioplay.fi/nrj/nrj_64.aac?direct=true&listenerid=undefined&aw_0_1st.bauer_listenerid=undefined&aw_0_1st.playerid=BMUK_inpage_html5&aw_0_1st.skey=1690467405&aw_0_1st', 'NRJ Finland', 'flag-icon-fi', 'フィンランド')">NRJ Finland</button>
             </div>
         </div>
 
         <div class="country-section" data-country="france">
             <h2><span class="flag-icon flag-icon-fr"></span>フランス</h2>
             <div class="radio-station">
-                <button onclick="playRadio('https://100radio-foix.ice.infomaniak.ch/100radio-foix-128.mp3', '100% Radio – Foix', 'flag-icon-fr')">100% Radio – Foix</button>
-                <button onclick="playRadio('https://stream.zeno.fm/er3nkny6fd0uv', '432Hz Radio', 'flag-icon-fr')">432Hz Radio</button>
-                <button onclick="playRadio('https://radiosun.ice.infomaniak.ch/radiosun-high.mp3', 'Sun 101.5 FM', 'flag-icon-fr')">Sun 101.5 FM</button>
+                <button onclick="playRadio('https://100radio-foix.ice.infomaniak.ch/100radio-foix-128.mp3', '100% Radio – Foix', 'flag-icon-fr', 'フランス')">100% Radio – Foix</button>
+                <button onclick="playRadio('https://stream.zeno.fm/er3nkny6fd0uv', '432Hz Radio', 'flag-icon-fr', 'フランス')">432Hz Radio</button>
+                <button onclick="playRadio('https://radiosun.ice.infomaniak.ch/radiosun-high.mp3', 'Sun 101.5 FM', 'flag-icon-fr', 'フランス')">Sun 101.5 FM</button>
             </div>
         </div>
 
         <div class="country-section" data-country="japan">
             <h2><span class="flag-icon flag-icon-jp"></span>日本</h2>
             <div class="radio-station">
-                <button onclick="playRadio('https://cast1.torontocast.com:2120/;', 'asia DREAM radio - Japan Hits', 'flag-icon-jp')">asia DREAM radio - Japan Hits</button>
-                <button onclick="playRadio('http://61.89.201.27:8000/radikishi.mp3', 'Radio Kishiwada 79.7 FM', 'flag-icon-jp')">Radio Kishiwada 79.7 FM</button>
-                <button onclick="playRadio('https://stream.gensokyoradio.net/1/', 'Touhou Radio', 'flag-icon-jp')">Touhou Radio</button>
+                <button onclick="playRadio('https://cast1.torontocast.com:2120/;', 'asia DREAM radio - Japan Hits', 'flag-icon-jp', '日本')">asia DREAM radio - Japan Hits</button>
+                <button onclick="playRadio('http://61.89.201.27:8000/radikishi.mp3', 'Radio Kishiwada 79.7 FM', 'flag-icon-jp', '日本')">Radio Kishiwada 79.7 FM</button>
+                <button onclick="playRadio('https://stream.gensokyoradio.net/1/', 'Touhou Radio', 'flag-icon-jp', '日本')">Touhou Radio</button>
             </div>
         </div>
         <!-- 他の国のラジオ局も同様に追加 -->
@@ -243,7 +243,7 @@
         });
     }
 
-    function playRadio(url, title, flagClass) {
+    function playRadio(url, title, flagClass, countryName) {
         var audioPlayer = document.getElementById('audio-player');
         var loadingSpinner = document.getElementById('loading-spinner');
         var currentTitle = document.getElementById('current-title');
@@ -269,7 +269,7 @@
             navigator.mediaSession.metadata = new MediaMetadata({
                 title: title,
                 artist: 'WebRadio',
-                album: 'ラジオ局',
+                album: countryName, // アルバム欄に国名を設定
                 artwork: [
                     { src: 'image/icon96.png', sizes: '96x96', type: 'image/png' },
                     { src: 'image/icon128.png', sizes: '128x128', type: 'image/png' },
