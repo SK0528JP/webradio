@@ -1,310 +1,156 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WebRadio</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css">
-    <link rel="icon" href="favicon.png" type="image/x-icon">
-
-    <!-- Open Graph tags for social media -->
-    <meta property="og:title" content="WebRadio">
-    <meta property="og:description" content="世界中のラジオ局を聴くことができるWebRadioです。">
-    <meta property="og:image" content="head.png">
-    <meta property="og:url" content="https://sk0528jp.github.io/webradio/">
-    <meta property="og:type" content="website">
-
-    <!-- Twitter Card tags for Twitter -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="WebRadio">
-    <meta name="twitter:description" content="世界中のラジオ局を聴くことができるWebRadioです。">
-    <meta name="twitter:image" content="head.png">
-    
-    <style>
-        @font-face {
-            font-family: "03SmartFontUI";
-            src: url("03SmartFontUI.ttf");
-        }
-        body {
-            font-family: '03SmartFontUI', sans-serif;
-            background-color: #121212;
-            color: #e0e0e0;
-            margin: 0;
-            padding: 0;
-        }
-        header {
-            background-color: #1f1f1f;
-            color: #e0e0e0;
-            padding: 20px 0;
-            text-align: center;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
-        header h1 {
-            margin: 0;
-            font-size: 2.5em;
-            font-weight: 300;
-        }
-        #search-bar {
-            margin: 20px auto;
-            width: 80%;
-            text-align: center;
-        }
-        #search-bar input {
-            width: 100%;
-            padding: 15px;
-            font-size: 1.2em;
-            border: none;
-            border-radius: 25px;
-            background-color: #333;
-            color: #e0e0e0;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-            outline: none;
-        }
-        #audio-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            background-color: #1e1e1e;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            margin: 20px auto;
-            width: 80%;
-        }
-        #current-station {
-            display: flex;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-        #current-station .flag-icon {
-            width: 64px;
-            height: 48px;
-            border-radius: 8px;
-            margin-right: 10px;
-        }
-        #current-station span {
-            font-size: 1.2em;
-        }
-        audio {
-            width: 100%;
-            margin-top: 10px;
-            border-radius: 10px;
-            background-color: #333;
-            color: #e0e0e0;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            outline: none;
-            border: none;
-        }
-        .volume-control {
-            display: flex;
-            align-items: center;
-            margin-top: 10px;
-            width: 100%;
-        }
-        .volume-control label {
-            margin-right: 10px;
-        }
-        .volume-control input[type="range"] {
-            flex: 1;
-        }
-        .loading {
-            display: none;
-            border: 8px solid #e0e0e0;
-            border-top: 8px solid #008211;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
-        }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        .country-section {
-            margin: 20px auto;
-            width: 80%;
-            background-color: #1e1e1e;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
-        .country-section h2 {
-            display: flex;
-            align-items: center;
-            font-size: 1.5em;
-            border-bottom: 2px solid #008211;
-            padding-bottom: 10px;
-        }
-        .flag-icon {
-            border-radius: 4px;
-            margin-right: 10px;
-        }
-        .radio-station {
-            margin: 15px 0;
-        }
-        .radio-station button {
-            padding: 10px 20px;
-            font-size: 1em;
-            border: none;
-            border-radius: 25px;
-            background-color: #008211;
-            color: white;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            margin-right: 4px;
-            margin-bottom: 4px;
-        }
-        .radio-station button:hover {
-            background-color: #016e10;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NRJ Sweden Player</title>
+  <link rel="icon" href="favicon.png">
+  <style>
+    /* 全体 */
+    body {
+      margin: 0; padding: 0;
+      background: linear-gradient(135deg,#121212 0%,#1f1f1f 100%);
+      color: #e0e0e0;
+      font-family: '03SmartFontUI', sans-serif;
+      display: flex; flex-direction: column; align-items: center;
+      min-height: 100vh;
+    }
+    header {
+      text-align: center;
+      padding: 1rem;
+      width: 100%;
+      background: rgba(31,31,31,0.8);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+      backdrop-filter: blur(4px);
+    }
+    header h1 { margin: .5rem 0; font-size: 2rem; }
+    /* プレイヤー */
+    #player {
+      background: rgba(30,30,30,0.9);
+      border-radius: 1rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.6);
+      padding: 2rem;
+      margin: 2rem;
+      width: 90%; max-width: 500px;
+      display: flex; flex-direction: column; align-items: center;
+    }
+    #station-info {
+      display: flex; align-items: center; gap: .5rem;
+      margin-bottom: 1rem;
+    }
+    #station-flag {
+      width: 48px; height: 32px;
+      background: url('https://flagcdn.com/w80/se.png') center/cover no-repeat;
+      border-radius: .3rem;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+    }
+    #station-name {
+      font-size: 1.4rem; font-weight: bold;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.7);
+    }
+    /* カスタムコントロール */
+    #controls {
+      display: flex; align-items: center; gap: 1rem;
+      margin-top: 1rem; width: 100%;
+    }
+    #play-btn {
+      width: 60px; height: 60px;
+      border: none; border-radius: 50%;
+      background: #008211;
+      color: #fff; font-size: 2rem;
+      cursor: pointer; box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+      transition: background .3s;
+    }
+    #play-btn.paused { background: #c00; }
+    #volume {
+      flex: 1;
+    }
+    /* ローディング */
+    #loading {
+      margin-top: 1rem;
+      width: 40px; height: 40px;
+      border: 5px solid #e0e0e0;
+      border-top: 5px solid #008211;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      display: none;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    /* レスポンシブ */
+    @media (max-width: 400px) {
+      #play-btn { width: 50px; height: 50px; font-size: 1.5rem; }
+      #station-name { font-size: 1.2rem; }
+    }
+  </style>
 </head>
 <body>
-    <header>
-        <h1>WebRadio</h1>
-        <h2>Made by SK0528JP (from Flegertec)</h2>
-        <p>再生されていても完全に読み込まれていない場合、音声が途切れ途切れになり、ロード中マークが表示されたままになりますが、しばらくすると正しく再生される可能性があります。</p>
-        <p>おススメは【スウェーデン】NRJ Swedenです</p>
-    </header>
-    <div id="audio-container">
-        <div id="current-station">
-            <span class="flag-icon" id="current-flag"></span>
-            <span id="current-title">ラジオ局を選択してください</span>
-        </div>
-        <div class="loading" id="loading-spinner"></div>
-        <audio id="audio-player" controls></audio>
-        <div class="volume-control">
-            <label for="volume-slider">音量: <span id="volume-level">100</span>%</label>
-            <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="1">
-        </div>
+  <header>
+    <h1>NRJ Sweden</h1>
+  </header>
+
+  <div id="player">
+    <div id="station-info">
+      <div id="station-flag"></div>
+      <div id="station-name">NRJ Sweden</div>
     </div>
-    <div id="search-bar">
-        <input type="text" id="search-input" placeholder="ラジオ局を検索">
+
+    <div id="loading"></div>
+
+    <audio id="audio" src="https://edge-bauersefm-06-gos2.sharp-stream.com/nrj_instreamtest_se_mp3"></audio>
+
+    <div id="controls">
+      <button id="play-btn">▶︎</button>
+      <input type="range" id="volume" min="0" max="1" step="0.01" value="1">
     </div>
-    <div id="country-list">
+  </div>
 
-        <div class="country-section" data-country="sweden">
-            <h2><span class="flag-icon flag-icon-se"></span>スウェーデン</h2>
-            <div class="radio-station">
-                <button onclick="playRadio('https://edge-bauersefm-06-gos2.sharp-stream.com/nrj_instreamtest_se_mp3', 'NRJ Sweden', 'flag-icon-se', 'スウェーデン')">NRJ Sweden</button>
-                <button onclick="playRadio('https://stream.dbmedia.se/gk96', '102.6 Guldkanalen', 'flag-icon-se', 'スウェーデン')">102.6 Guldkanalen</button>
-                <button onclick="playRadio('https://http-live.sr.se/p2musik-mp3-192', 'P2 Klassiskt', 'flag-icon-se', 'スウェーデン')">P2 Klassiskt</button>
-            </div>
-        </div>
+  <script>
+    const audio = document.getElementById('audio');
+    const playBtn = document.getElementById('play-btn');
+    const volume = document.getElementById('volume');
+    const loading = document.getElementById('loading');
 
-        <div class="country-section" data-country="finland">
-            <h2><span class="flag-icon flag-icon-fi"></span>フィンランド</h2>
-            <div class="radio-station">
-                <button onclick="playRadio('https://stream.radioplay.fi/kiss/kiss_64.aac', 'City 99.4 FM', 'flag-icon-fi', 'フィンランド')">City 99.4 FM</button>
-                <button onclick="playRadio('https://st.downtime.fi/sun.aac', 'Radio Sun 106.7', 'flag-icon-fi', 'フィンランド')">Radio Sun 106.7</button>
-                <button onclick="playRadio('https://stream.radioplay.fi/nrj/nrj_64.aac?direct=true&listenerid=undefined&aw_0_1st.bauer_listenerid=undefined&aw_0_1st.playerid=BMUK_inpage_html5&aw_0_1st.skey=1690467405&aw_0_1st', 'NRJ Finland', 'flag-icon-fi', 'フィンランド')">NRJ Finland</button>
-            </div>
-        </div>
-
-        <div class="country-section" data-country="france">
-            <h2><span class="flag-icon flag-icon-fr"></span>フランス</h2>
-            <div class="radio-station">
-                <button onclick="playRadio('https://100radio-foix.ice.infomaniak.ch/100radio-foix-128.mp3', '100% Radio – Foix', 'flag-icon-fr', 'フランス')">100% Radio – Foix</button>
-                <button onclick="playRadio('https://stream.zeno.fm/er3nkny6fd0uv', '432Hz Radio', 'flag-icon-fr', 'フランス')">432Hz Radio</button>
-                <button onclick="playRadio('https://radiosun.ice.infomaniak.ch/radiosun-high.mp3', 'Sun 101.5 FM', 'flag-icon-fr', 'フランス')">Sun 101.5 FM</button>
-            </div>
-        </div>
-
-        <div class="country-section" data-country="japan">
-            <h2><span class="flag-icon flag-icon-jp"></span>日本</h2>
-            <div class="radio-station">
-                <button onclick="playRadio('https://cast1.torontocast.com:2120/;', 'asia DREAM radio - Japan Hits', 'flag-icon-jp', '日本')">asia DREAM radio - Japan Hits</button>
-                <button onclick="playRadio('http://61.89.201.27:8000/radikishi.mp3', 'Radio Kishiwada 79.7 FM', 'flag-icon-jp', '日本')">Radio Kishiwada 79.7 FM</button>
-                <button onclick="playRadio('https://stream.gensokyoradio.net/1/', 'Touhou Radio', 'flag-icon-jp', '日本')">Touhou Radio</button>
-            </div>
-        </div>
-
-        <div class="country-section" data-country="korea">
-            <h2><span class="flag-icon flag-icon-kr"></span>韓国</h2>
-            <div class="radio-station">
-                <button onclick="playRadio('https://streamingp.shoutcast.com/JamendoLounge?lang=ja%3bq%3d0.8', 'Korea Station', 'flag-icon-kr', '韓国')">Korea Station</button>
-            </div>
-        </div>
-        <!-- 他の国のラジオ局も同様に追加 -->
-    </div>
-    <script>
-    document.getElementById('search-input').addEventListener('input', function() {
-        var filter = this.value.toLowerCase();
-        var sections = document.querySelectorAll('.country-section');
-        sections.forEach(function(section) {
-            var country = section.dataset.country.toLowerCase();
-            var stations = section.querySelectorAll('.radio-station button');
-            var match = country.includes(filter);
-            stations.forEach(function(station) {
-                if (station.textContent.toLowerCase().includes(filter) || station.textContent.toLowerCase().includes(katakanaToHiragana(filter))) {
-                    match = true;
-                }
-            });
-            section.style.display = match ? '' : 'none';
-        });
+    // 再生/一時停止
+    playBtn.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+      } else {
+        audio.pause();
+      }
+    });
+    audio.addEventListener('play', () => {
+      playBtn.textContent = '⏸'; playBtn.classList.add('paused');
+    });
+    audio.addEventListener('pause', () => {
+      playBtn.textContent = '▶︎'; playBtn.classList.remove('paused');
     });
 
-    function katakanaToHiragana(str) {
-        return str.replace(/[\u30a1-\u30f6]/g, function(match) {
-            var chr = match.charCodeAt(0) - 0x60;
-            return String.fromCharCode(chr);
-        });
-    }
-
-    function playRadio(url, title, flagClass, countryName) {
-        var audioPlayer = document.getElementById('audio-player');
-        var loadingSpinner = document.getElementById('loading-spinner');
-        var currentTitle = document.getElementById('current-title');
-        var currentFlag = document.getElementById('current-flag');
-
-        currentTitle.textContent = title;
-        currentFlag.className = 'flag-icon ' + flagClass;
-
-        loadingSpinner.style.display = 'block';
-        audioPlayer.style.display = 'none';
-
-        audioPlayer.src = url;
-        audioPlayer.load();
-        audioPlayer.play();
-
-        audioPlayer.oncanplaythrough = function() {
-            loadingSpinner.style.display = 'none';
-            audioPlayer.style.display = 'block';
-        };
-
-        // Media Session APIの設定
-        if ('mediaSession' in navigator) {
-            navigator.mediaSession.metadata = new MediaMetadata({
-                title: title,
-                artist: countryName,
-                album: 'WebRadio',
-                artwork: [
-                    { src: 'image/icon96.png', sizes: '96x96', type: 'image/png' },
-                    { src: 'image/icon128.png', sizes: '128x128', type: 'image/png' },
-                    { src: 'image/icon192.png', sizes: '192x192', type: 'image/png' },
-                    { src: 'image/icon256.png', sizes: '256x256', type: 'image/png' },
-                    { src: 'image/icon384.png', sizes: '384x384', type: 'image/png' },
-                    { src: 'image/icon512.png', sizes: '512x512', type: 'image/png' }
-                ]
-            });
-
-            // 再生/一時停止コントロールのハンドリング
-            navigator.mediaSession.setActionHandler('play', () => {
-                audioPlayer.play();
-            });
-            navigator.mediaSession.setActionHandler('pause', () => {
-                audioPlayer.pause();
-            });
-        }
-    }
-
-    document.getElementById('volume-slider').addEventListener('input', function() {
-        var audioPlayer = document.getElementById('audio-player');
-        var volumeLevel = document.getElementById('volume-level');
-        audioPlayer.volume = this.value;
-        volumeLevel.textContent = Math.round(this.value * 100);
+    // 音量
+    volume.addEventListener('input', () => {
+      audio.volume = volume.value;
     });
-</script>
 
+    // ローディング
+    audio.addEventListener('waiting', () => { loading.style.display = 'block'; });
+    audio.addEventListener('playing', () => { loading.style.display = 'none'; });
+
+    // メディアセッションAPI
+    if ('mediaSession' in navigator) {
+      navigator.mediaSession.metadata = new MediaMetadata({
+        title: 'NRJ Sweden',
+        artist: 'NRJ',
+        album: 'Internet Radio',
+        artwork: [
+          { src: 'favicon.png',   sizes: '96x96',   type: 'image/png' },
+          { src: 'head.png',      sizes: '512x512', type: 'image/png' }
+        ]
+      });
+      navigator.mediaSession.setActionHandler('play',  () => audio.play());
+      navigator.mediaSession.setActionHandler('pause', () => audio.pause());
+    }
+
+    // 自動再生
+    audio.play().catch(() => {});
+  </script>
 </body>
 </html>
