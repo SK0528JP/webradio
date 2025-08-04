@@ -3,7 +3,530 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WebRadio</title>
+    <title>WebRadio</title><!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebRadio - SK0528JP</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css">
+    <link rel="icon" href="favicon.png" type="image/x-icon">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <meta property="og:title" content="WebRadio">
+    <meta property="og:description" content="世界中のラジオを聴くことができるWebRadioです。">
+    <meta property="og:image" content="head.png">
+    <meta property="og:url" content="https://sk0528jp.github.io/webradio/">
+    <meta property="og:type" content="website">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="WebRadio">
+    <meta name="twitter:description" content="世界中のラジオを聴くことができるWebRadioです。">
+    <meta name="twitter:image" content="head.png">
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+        /* MiSansフォントの定義 */
+        @font-face {
+            font-family: 'MiSans';
+            src: url('https://sk0528jp.github.io/fonts/MiSans-Normal.woff2') format('woff2');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        :root {
+            --dark-bg: #121212;
+            --dark-surface: #1E1E1E;
+            --matcha-green: #5F7354;
+            --text-primary: #E8E8E8;
+            --text-secondary: #A0A0A0;
+            --font-family: 'Roboto', sans-serif;
+            --shadow: 0 1px 3px rgba(0,0,0,0.2), 0 1px 2px rgba(0,0,0,0.24);
+        }
+
+        body {
+            background-color: var(--dark-bg);
+            color: var(--text-primary);
+            font-family: 'MiSans', var(--font-family), sans-serif;
+            margin: 0;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            scroll-behavior: smooth;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        header {
+            background-color: var(--dark-surface);
+            padding: 16px 0;
+            border-bottom: 1px solid #333;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo a {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        .logo a:hover {
+            color: var(--matcha-green);
+        }
+
+        .main-nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            gap: 24px;
+        }
+
+        .main-nav a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 500;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        .main-nav a:hover {
+            color: var(--text-primary);
+        }
+        .main-nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--matcha-green);
+            transition: width 0.3s ease;
+        }
+        .main-nav a:hover::after {
+            width: 100%;
+        }
+
+        .lang-switcher {
+            display: flex;
+            gap: 5px;
+        }
+        .lang-switcher button {
+            background: none;
+            border: 1px solid var(--text-secondary);
+            color: var(--text-secondary);
+            padding: 4px 8px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            border-radius: 32px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .lang-switcher button:hover {
+            background-color: rgba(95, 115, 84, 0.2);
+            color: var(--matcha-green);
+        }
+        .lang-switcher button.active {
+            background-color: var(--matcha-green);
+            color: var(--dark-bg);
+            border-color: var(--matcha-green);
+        }
+
+        main {
+            background-color: var(--dark-surface);
+            padding: 0;
+        }
+
+        section {
+            margin-bottom: 80px;
+        }
+        h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin: 0;
+        }
+        h3 {
+            font-size: 1.8rem;
+            font-weight: 500;
+            color: var(--text-primary);
+            margin-bottom: 24px;
+            border-bottom: 1px solid #333;
+            padding-bottom: 8px;
+        }
+        .section-title {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .section-title.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        h4 {
+            font-size: 1.2rem;
+            font-weight: 500;
+            margin: 0 0 8px 0;
+        }
+        
+        /* WebRadio Player Specific Styles */
+        #webradio-player {
+            padding: 48px 0;
+        }
+        
+        .player-card {
+            padding: 24px;
+            border-radius: 8px;
+            background-color: var(--dark-bg);
+            box-shadow: var(--shadow);
+            margin-bottom: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        #current-station {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        #current-station .flag-icon {
+            width: 64px;
+            height: 48px;
+            border-radius: 8px;
+            margin-right: 10px;
+        }
+        #current-station span {
+            font-size: 1.2em;
+        }
+        .loading {
+            display: none;
+            border: 8px solid var(--text-secondary);
+            border-top: 8px solid var(--matcha-green);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        #audio-player {
+            width: 100%;
+            margin-top: 10px;
+            background-color: #333;
+            border-radius: 8px;
+            outline: none;
+        }
+
+        .volume-control {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            margin-top: 15px;
+        }
+        .volume-control label {
+            white-space: nowrap;
+            margin-right: 10px;
+        }
+        .volume-control input[type="range"] {
+            flex-grow: 1;
+        }
+        
+        #search-bar {
+            margin-bottom: 40px;
+        }
+        #search-bar input {
+            width: 100%;
+            padding: 12px 20px;
+            font-size: 1rem;
+            border: none;
+            border-radius: 25px;
+            background-color: var(--dark-bg);
+            color: var(--text-primary);
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.3);
+            outline: none;
+        }
+
+        .country-section h2 {
+            display: flex;
+            align-items: center;
+            font-size: 1.5em;
+            border-bottom: 2px solid var(--matcha-green);
+            padding-bottom: 10px;
+            margin-bottom: 24px;
+        }
+        .country-section .flag-icon {
+            border-radius: 4px;
+            margin-right: 10px;
+        }
+        
+        .radio-station button {
+            background-color: var(--matcha-green);
+            color: var(--dark-bg);
+            padding: 8px 16px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            margin-right: 8px;
+            margin-bottom: 8px;
+        }
+        .radio-station button:hover {
+            background-color: #7A9070;
+            transform: translateY(-2px);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            header .container {
+                flex-direction: column;
+                gap: 16px;
+                text-align: center;
+            }
+            .logo a {
+                font-size: 1.5rem;
+            }
+            .main-nav, .lang-switcher {
+                margin-top: 0;
+            }
+            .volume-control {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .volume-control label {
+                margin-bottom: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <a href="#"><h1 data-lang-ja="WebRadio" data-lang-en="WebRadio" data-lang-sv="WebRadio">WebRadio</h1></a>
+            </div>
+            <div class="lang-switcher">
+                <button id="lang-ja" class="active">日本語</button>
+                <button id="lang-en">English</button>
+                <button id="lang-sv">Svenska</button>
+            </div>
+        </div>
+    </header>
+    <main>
+        <div class="container">
+            <section id="webradio-player">
+                <div class="player-card">
+                    <div id="current-station">
+                        <span class="flag-icon" id="current-flag"></span>
+                        <h4 id="current-title" data-lang-ja="ラジオ局を選択してください" data-lang-en="Please select a radio station" data-lang-sv="Välj en radiostation">ラジオ局を選択してください</h4>
+                    </div>
+                    <div class="loading" id="loading-spinner"></div>
+                    <audio id="audio-player" controls></audio>
+                    <div class="volume-control">
+                        <label for="volume-slider" data-lang-ja="音量: " data-lang-en="Volume: " data-lang-sv="Volym: ">音量: <span id="volume-level">100</span>%</label>
+                        <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="1">
+                    </div>
+                </div>
+            </section>
+
+            <section id="radio-list">
+                <h3 data-lang-ja="世界のラジオ局" data-lang-en="World Radio Stations" data-lang-sv="Världsradiostationer">世界のラジオ局</h3>
+                <div id="search-bar">
+                    <input type="text" id="search-input" placeholder="ラジオ局を検索">
+                </div>
+                <div id="country-list" class="grid-layout">
+                    <div class="country-section card" data-country="sweden">
+                        <h4 data-lang-ja="スウェーデン" data-lang-en="Sweden" data-lang-sv="Sverige"><span class="flag-icon flag-icon-se"></span>スウェーデン</h4>
+                        <div class="radio-station">
+                            <button onclick="playRadio('https://edge-bauersefm-06-gos2.sharp-stream.com/nrj_instreamtest_se_mp3', 'NRJ Sweden', 'flag-icon-se', 'スウェーデン')">NRJ Sweden</button>
+                            <button onclick="playRadio('https://stream.dbmedia.se/gk96', '102.6 Guldkanalen', 'flag-icon-se', 'スウェーデン')">102.6 Guldkanalen</button>
+                            <button onclick="playRadio('https://http-live.sr.se/p2musik-mp3-192', 'P2 Klassiskt', 'flag-icon-se', 'スウェーデン')">P2 Klassiskt</button>
+                        </div>
+                    </div>
+                    
+                    <div class="country-section card" data-country="finland">
+                        <h4 data-lang-ja="フィンランド" data-lang-en="Finland" data-lang-sv="Finland"><span class="flag-icon flag-icon-fi"></span>フィンランド</h4>
+                        <div class="radio-station">
+                            <button onclick="playRadio('https://stream.radioplay.fi/kiss/kiss_64.aac', 'City 99.4 FM', 'flag-icon-fi', 'フィンランド')">City 99.4 FM</button>
+                            <button onclick="playRadio('https://st.downtime.fi/sun.aac', 'Radio Sun 106.7', 'flag-icon-fi', 'フィンランド')">Radio Sun 106.7</button>
+                            <button onclick="playRadio('https://stream.radioplay.fi/nrj/nrj_64.aac?direct=true&listenerid=undefined&aw_0_1st.bauer_listenerid=undefined&aw_0_1st.playerid=BMUK_inpage_html5&aw_0_1st.skey=1690467405&aw_0_1st', 'NRJ Finland', 'flag-icon-fi', 'フィンランド')">NRJ Finland</button>
+                        </div>
+                    </div>
+
+                    <div class="country-section card" data-country="france">
+                        <h4 data-lang-ja="フランス" data-lang-en="France" data-lang-sv="Frankrike"><span class="flag-icon flag-icon-fr"></span>フランス</h4>
+                        <div class="radio-station">
+                            <button onclick="playRadio('https://100radio-foix.ice.infomaniak.ch/100radio-foix-128.mp3', '100% Radio – Foix', 'flag-icon-fr', 'フランス')">100% Radio – Foix</button>
+                            <button onclick="playRadio('https://stream.zeno.fm/er3nkny6fd0uv', '432Hz Radio', 'flag-icon-fr', 'フランス')">432Hz Radio</button>
+                            <button onclick="playRadio('https://radiosun.ice.infomaniak.ch/radiosun-high.mp3', 'Sun 101.5 FM', 'flag-icon-fr', 'フランス')">Sun 101.5 FM</button>
+                        </div>
+                    </div>
+
+                    <div class="country-section card" data-country="japan">
+                        <h4 data-lang-ja="日本" data-lang-en="Japan" data-lang-sv="Japan"><span class="flag-icon flag-icon-jp"></span>日本</h4>
+                        <div class="radio-station">
+                            <button onclick="playRadio('https://cast1.torontocast.com:2120/;', 'asia DREAM radio - Japan Hits', 'flag-icon-jp', '日本')">asia DREAM radio - Japan Hits</button>
+                            <button onclick="playRadio('http://61.89.201.27:8000/radikishi.mp3', 'Radio Kishiwada 79.7 FM', 'flag-icon-jp', '日本')">Radio Kishiwada 79.7 FM</button>
+                            <button onclick="playRadio('https://stream.gensokyoradio.net/1/', 'Touhou Radio', 'flag-icon-jp', '日本')">Touhou Radio</button>
+                        </div>
+                    </div>
+
+                    <div class="country-section card" data-country="korea">
+                        <h4 data-lang-ja="韓国" data-lang-en="Korea" data-lang-sv="Sydkorea"><span class="flag-icon flag-icon-kr"></span>韓国</h4>
+                        <div class="radio-station">
+                            <button onclick="playRadio('https://streamingp.shoutcast.com/JamendoLounge?lang=ja%3bq%3d0.8', 'Korea Station', 'flag-icon-kr', '韓国')">Korea Station</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 SK0528JP. All Rights Reserved.</p>
+        </div>
+    </footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const searchInput = document.getElementById('search-input');
+            const sections = document.querySelectorAll('.country-section');
+            const audioPlayer = document.getElementById('audio-player');
+            const volumeSlider = document.getElementById('volume-slider');
+            const volumeLevel = document.getElementById('volume-level');
+            const loadingSpinner = document.getElementById('loading-spinner');
+            const currentTitle = document.getElementById('current-title');
+            const currentFlag = document.getElementById('current-flag');
+            const langButtons = document.querySelectorAll('.lang-switcher button');
+            const elementsToTranslate = document.querySelectorAll('[data-lang-ja]');
+            const countryHeadings = document.querySelectorAll('.country-section h4');
+
+            // 言語切り替え機能
+            const updateTexts = (lang) => {
+                elementsToTranslate.forEach(el => {
+                    const translation = el.getAttribute(`data-lang-${lang}`);
+                    if (translation) {
+                        el.textContent = translation;
+                    }
+                });
+                countryHeadings.forEach(h4 => {
+                    const translation = h4.getAttribute(`data-lang-${lang}`);
+                    if (translation) {
+                        const flag = h4.querySelector('.flag-icon');
+                        h4.textContent = translation;
+                        if (flag) {
+                            h4.prepend(flag);
+                        }
+                    }
+                });
+                const placeholder = {
+                    ja: 'ラジオ局を検索',
+                    en: 'Search radio stations',
+                    sv: 'Sök radiostationer'
+                };
+                searchInput.placeholder = placeholder[lang];
+            };
+
+            langButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    langButtons.forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+                    const lang = button.id.replace('lang-', '');
+                    updateTexts(lang);
+                });
+            });
+
+            // 検索機能
+            searchInput.addEventListener('input', function() {
+                var filter = this.value.toLowerCase();
+                sections.forEach(function(section) {
+                    var sectionVisible = false;
+                    var stations = section.querySelectorAll('.radio-station button');
+                    var countryName = section.querySelector('h4').textContent.toLowerCase();
+
+                    if (countryName.includes(filter) || countryName.includes(katakanaToHiragana(filter))) {
+                        sectionVisible = true;
+                    } else {
+                        stations.forEach(function(station) {
+                            if (station.textContent.toLowerCase().includes(filter) || station.textContent.toLowerCase().includes(katakanaToHiragana(filter))) {
+                                sectionVisible = true;
+                            }
+                        });
+                    }
+                    section.style.display = sectionVisible ? '' : 'none';
+                });
+            });
+
+            // 全角カタカナを全角ひらがなに変換する関数
+            const katakanaToHiragana = (str) => {
+                return str.replace(/[\u30a1-\u30f6]/g, match => String.fromCharCode(match.charCodeAt(0) - 0x60));
+            };
+
+            // ラジオ再生機能
+            window.playRadio = (url, title, flagClass, countryName) => {
+                currentTitle.textContent = title;
+                currentFlag.className = 'flag-icon ' + flagClass;
+                loadingSpinner.style.display = 'block';
+                audioPlayer.style.display = 'none';
+                audioPlayer.src = url;
+                audioPlayer.load();
+                audioPlayer.play();
+
+                audioPlayer.oncanplaythrough = () => {
+                    loadingSpinner.style.display = 'none';
+                    audioPlayer.style.display = 'block';
+                };
+
+                if ('mediaSession' in navigator) {
+                    navigator.mediaSession.metadata = new MediaMetadata({
+                        title: title,
+                        artist: countryName,
+                        album: 'WebRadio',
+                        artwork: [
+                            { src: 'image/icon96.png', sizes: '96x96', type: 'image/png' },
+                            { src: 'image/icon128.png', sizes: '128x128', type: 'image/png' },
+                            { src: 'image/icon192.png', sizes: '192x192', type: 'image/png' },
+                            { src: 'image/icon256.png', sizes: '256x256', type: 'image/png' },
+                            { src: 'image/icon384.png', sizes: '384x384', type: 'image/png' },
+                            { src: 'image/icon512.png', sizes: '512x512', type: 'image/png' }
+                        ]
+                    });
+                    navigator.mediaSession.setActionHandler('play', () => audioPlayer.play());
+                    navigator.mediaSession.setActionHandler('pause', () => audioPlayer.pause());
+                }
+            };
+
+            // 音量調整機能
+            volumeSlider.addEventListener('input', function() {
+                audioPlayer.volume = this.value;
+                volumeLevel.textContent = Math.round(this.value * 100);
+            });
+
+            // 初期表示時に言語を日本語に設定
+            updateTexts('ja');
+        });
+    </script>
+</body>
+</html>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css">
     <link rel="icon" href="favicon.png" type="image/x-icon">
 
@@ -306,3 +829,4 @@
 
 </body>
 </html>
+
